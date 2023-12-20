@@ -1,0 +1,58 @@
+<html>
+<head>
+	<script type="text/javascript" src="dataObjects/dispatch.js"></script>
+    <script type="text/javascript" src="dataObjects/order.js"></script>
+	<script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="constant.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript">
+	$(document).ready(function() {
+    $('#search_button').hide();
+    $("#order_table").hide();
+    $('.error_message').hide();
+
+    getRequest(
+        {
+            "data": "dispatch_list",
+        },
+        update_dispatch_list
+    )
+
+    getRequest(
+        {
+            "data": "order_list",
+        },
+        update_order_list
+    )
+});
+	</script>
+</head>
+
+<body>
+	<div class='error_message'>Not found</div> 
+    <select id="categories">
+        <option value="All">All</option>
+    </select>
+	<table id='order_table'>
+		<tr>
+			<th>ID</th>
+			<th>Status</th>
+			<th>Dispatch_date</th>
+		</tr>
+	</table>
+
+	<script type="text/javascript">
+        $('#categories').change(function() {
+            getRequest(
+                {
+                    "data": "orders_in_exact_dispatch",
+                    "dispatch": $(this).val()
+                },
+                update_order_list
+            )
+        }
+    )
+	</script>
+
+</body>
+</html>
